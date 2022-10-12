@@ -1,0 +1,17 @@
+msgid "add"
+msgstr "add"
+
+msgid "delete"
+msgstr "delete"
+
+msgid "delete_all"
+msgstr "Delete All"
+
+msgid "edit"
+msgstr "edit"
+
+msgid "addNormal"
+msgstr "Add (no segmentation)"
+
+msgid "toast"
+msgstr "Too long text will result in failure to open and jam. It is not recommended to add text here"

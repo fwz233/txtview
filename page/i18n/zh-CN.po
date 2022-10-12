@@ -1,0 +1,32 @@
+msgid "notice_1"
+msgstr "正在同步数据"
+msgid "notice_2"
+msgstr "同步数据成功"
+
+msgid "cahnge_time"
+msgstr "不支持手表端修改文字\n    在Zepp手机应用程序修改后，手表应用程序不会立即修改，下一次进入本应用程序后会修改"
+
+msgid "notice_3"
+msgstr "自动回到上次阅读"
+msgid "notice_4"
+msgstr "不会回到上次阅读"
+msgid "notice_5"
+msgstr "回到上次"
+msgid "notice_6"
+msgstr "左滑熄屏"
+
+
+msgid "version"
+msgstr "版本:V2.9.999"
+msgid "setting"
+msgstr "设置"
+
+msgid "save"
+msgstr "显示页数"
+msgid "save_notic"
+msgstr "加载中..."
+
+msgid "notice_6"
+msgstr "该抛竿了！"
+msgid "notice_7"
+msgstr "该提杆了！"

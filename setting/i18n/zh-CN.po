@@ -1,0 +1,17 @@
+msgid "add"
+msgstr "增加"
+
+msgid "delete"
+msgstr "删除"
+
+msgid "delete_all"
+msgstr "删除全部"
+
+msgid "edit"
+msgstr "修改"
+
+msgid "addNormal"
+msgstr "增加(不分段)"
+
+msgid "toast"
+msgstr "过长的文本会导致无法打开和卡顿，不建议在这里添加文本"
