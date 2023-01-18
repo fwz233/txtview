@@ -1,0 +1,7 @@
+Page({
+    build() { },
+    onInit() {
+
+    },
+    onDestory() { }
+})

@@ -1,3 +1,4 @@
+/*
 import { MessageBuilder } from '../shared/message'
 import { DEFAULT_TODOLIST } from './../utils/constants'
 const messageBuilder = new MessageBuilder()
@@ -8,7 +9,7 @@ function getTodoList() {
 }
 AppSideService({
   onInit() {
-    messageBuilder.listen(() => {})
+    messageBuilder.listen(() => { })
     settings.settingsStorage.addListener('change', ({ key, newValue, oldValue }) => {
       messageBuilder.call(getTodoList())
     })
@@ -21,6 +22,7 @@ AppSideService({
       }
     })
   },
-  onRun() {},
-  onDestroy() {},
+  onRun() { },
+  onDestroy() { },
 })
+*/

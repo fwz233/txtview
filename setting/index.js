@@ -6,24 +6,24 @@ AppSettingsPage({
     props: {},
   },
   addTodoList(val) {
-    if(val.length<=345)
-    this.state.todoList.push(val)//.replaceAll("　"," "))
-    else{
-      var txtnum= Math.ceil(val.length/345)
-      for(var sb=0;sb<txtnum;sb++)
-      this.state.todoList.push((sb+1)+"+-"+val.substring(sb*345,(sb+1)*345+9))//.replaceAll("　"," "))
+    if (val.length <= 345)
+      this.state.todoList.push(val) //.replaceAll("　"," "))
+    else {
+      var txtnum = Math.ceil(val.length / 345)
+      for (var sb = 0; sb < txtnum; sb++)
+        this.state.todoList.push((sb + 1) + "+-" + val.substring(sb * 345, (sb + 1) * 345 + 9))//.replaceAll("　"," "))
     }
     this.setItem()
   },
   addTodoListNormal(val) {
-     this.state.todoList.push(val)
+    this.state.todoList.push(val)
     this.setItem()
   },
   editTodoList(val, index) {
-    if(val.indexOf("　") != -1)
-    this.state.todoList[index] = val.replaceAll("　"," ")
+    if (val.indexOf("　") != -1)
+      this.state.todoList[index] = val.replaceAll("　", " ")
     else
-    this.state.todoList[index] = val//.replaceAll("　"," ")
+      this.state.todoList[index] = val//.replaceAll("　"," ")
     this.setItem()
   },
   deleteTodoList(index) {
@@ -50,7 +50,7 @@ AppSettingsPage({
   build(props) {
     this.setState(props)
     const contentItems = []
-    const addBTN =  View({
+    const addBTN = View({
       style: {
         // borderBottom: '1px solid #eaeaea',
         padding: '6px 0',
@@ -60,7 +60,7 @@ AppSettingsPage({
         justifyContent: 'space-between',
         // border: '1px solid black',
       },
-    }, [ View({
+    }, [View({
       style: {
         fontSize: '12px',
         lineHeight: '30px',
@@ -74,13 +74,13 @@ AppSettingsPage({
     }, [
       TextInput({
         label: gettext('add'),
-        rows:9,
-        multiline:true,
+        rows: 9,
+        multiline: true,
         onChange: (val) => {
           this.addTodoList(val)
         },
       }),
-    ], ),Button({
+    ]), Button({
       label: gettext('delete_all'),
       style: {
         fontSize: '12px',
@@ -91,7 +91,7 @@ AppSettingsPage({
       onClick: () => {
         this.deleteTodoList_all()
       },
-    }) ], )
+    })])
 
     const addBTNNormal = View({
       style: {
@@ -102,21 +102,21 @@ AppSettingsPage({
         color: 'black',
         textAlign: 'Center',
         padding: '0 15px',
-        margin:'15px 0',
+        margin: '15px 0',
         width: '31%',
       },
     }, [
       TextInput({
         label: gettext('addNormal'),
-        rows:3,
-        placeholder:gettext('toast'),
-        multiline:true,
+        rows: 3,
+        placeholder: gettext('toast'),
+        multiline: true,
         onChange: (val) => {
           this.addTodoListNormal(val)
         },
       }),
-    ], )
-  
+    ])
+
     this.state.todoList.forEach((item, index) => {
       contentItems.push(
         View({
@@ -143,8 +143,8 @@ AppSettingsPage({
             TextInput({
               label: '',
               bold: true,
-              multiline:true,
-              rows:9,
+              multiline: true,
+              rows: 9,
               value: item,
               subStyle: {
                 color: '#333',
@@ -159,7 +159,7 @@ AppSettingsPage({
                 }
               },
             }),
-          ], ),
+          ]),
           Button({
             label: gettext('delete'),
             style: {
@@ -172,7 +172,7 @@ AppSettingsPage({
               this.deleteTodoList(index)
             },
           }),
-        ], ),
+        ]),
       )
     })
     return View({
@@ -180,7 +180,7 @@ AppSettingsPage({
         padding: '12px 20px',
       },
     }, [
-     addBTN,
+      addBTN,
       contentItems.length > 0 && View({
         style: {
           marginTop: '12px',
@@ -189,8 +189,8 @@ AppSettingsPage({
           borderRadius: '6px',
           backgroundColor: 'white',
         },
-      }, [...contentItems], ),
+      }, [...contentItems]),
       addBTNNormal,
-    ], )
+    ])
   },
 })

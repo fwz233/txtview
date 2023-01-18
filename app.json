@@ -1,10 +1,10 @@
 {
   "i18n": {
     "en-US": {
-      "appName": "坦克-前进！ [德] H·古德里安"
+      "appName": "杀戮的天使"
     },
     "zh-CN": {
-      "appName": "坦克-前进！ [德] H·古德里安"
+      "appName": "杀戮的天使"
     }
   },
   "defaultLanguage": "en-US",
@@ -12,17 +12,17 @@
     "appType": "app",
     "version": {
       "code": 5,
-      "name": "2.9.999"
+      "name": "2.10.2"
     },
     "appId": 1001001,
-    "appName": "坦克-前进！ [德] H·古德里安",
+    "appName": "杀戮的天使",
     "icon": "icon.png",
-    "vender": "zepp",
-    "description": "坦克-前进！ [德] H·古德里安",
+    "vender": "TxtViewer",
+    "description": "杀戮的天使",
     "vernderId": 1
-  }, 
+  },
   "permission": [
-    "network"
+    
   ],
   "runtime": {
     "apiVersion": {
@@ -59,7 +59,8 @@
         }
       },
       "designWidth": 480,
-      "platforms": [{
+      "platforms": [
+        {
           "name": "madrid",
           "deviceSource": 229
         },
@@ -69,191 +70,196 @@
         }
       ]
     },
-"gtr-3": {
-  "module": {
-    "page": {
-      "pages": [
-        "page/gtr-3/home/index.page",
-        "page/gtr-3/home/changetime",
-        "page/gtr-3/home/sos"
-      ],
-      "window": {
-        "navigationBarBackgroundColor": "#ffffff",
-        "navigationBarTextStyle": "black",
-        "navigationBarTitleText": "",
-        "backgroundColor": "#eeeeee",
-        "backgroundTextStyle": "light"
-      }
+    "gtr-3": {
+      "module": {
+        "page": {
+          "pages": [
+            "page/gtr-3/home/index.page",
+            "page/gtr-3/home/changetime",
+            "page/gtr-3/home/sos"
+          ],
+          "window": {
+            "navigationBarBackgroundColor": "#ffffff",
+            "navigationBarTextStyle": "black",
+            "navigationBarTitleText": "",
+            "backgroundColor": "#eeeeee",
+            "backgroundTextStyle": "light"
+          }
+        },
+        "app-widget": {
+          "widgets": []
+        },
+        "watchface": {
+          "path": ""
+        },
+        "watch-widget": {
+          "widgets": []
+        }
+      },
+      "designWidth": 454,
+      "platforms": [
+        {
+          "name": "verona",
+          "deviceSource": 226
+        },
+        {
+          "name": "veronaw",
+          "deviceSource": 227
+        }
+      ]
     },
-    "app-widget": {
-      "widgets": []
+    "gts-3": {
+      "module": {
+        "page": {
+          "pages": [
+            "page/gts3/home/index.page",
+            "page/gts3/home/changetime",
+            "page/gts3/home/sos"
+          ],
+          "window": {
+            "navigationBarBackgroundColor": "#ffffff",
+            "navigationBarTextStyle": "black",
+            "navigationBarTitleText": "",
+            "backgroundColor": "#eeeeee",
+            "backgroundTextStyle": "light"
+          }
+        },
+        "app-widget": {
+          "widgets": []
+        },
+        "watchface": {
+          "path": ""
+        },
+        "watch-widget": {
+          "widgets": []
+        }
+      },
+      "designWidth": 390,
+      "platforms": [
+        {
+          "name": "zurich",
+          "deviceSource": 224
+        },
+        {
+          "name": "zurichw",
+          "deviceSource": 225
+        }
+      ]
     },
-    "watchface": {
-      "path": ""
+    "t-rex2": {
+      "module": {
+        "page": {
+          "pages": [
+            "page/gtr-3/home/index.page",
+            "page/gtr-3/home/changetime",
+            "page/gtr-3/home/sos"
+          ],
+          "window": {
+            "navigationBarBackgroundColor": "#ffffff",
+            "navigationBarTextStyle": "black",
+            "navigationBarTitleText": "",
+            "backgroundColor": "#eeeeee",
+            "backgroundTextStyle": "light"
+          }
+        },
+        "app-widget": {
+          "widgets": []
+        },
+        "watchface": {
+          "path": ""
+        },
+        "watch-widget": {
+          "widgets": []
+        }
+      },
+      "designWidth": 454,
+      "platforms": [
+        {
+          "name": "t-rex2",
+          "deviceSource": 418
+        },
+        {
+          "name": "t-rex2w",
+          "deviceSource": 419
+        }
+      ]
     },
-    "watch-widget": {
-      "widgets": []
+    "gts-4": {
+      "module": {
+        "page": {
+          "pages": [
+            "page/gts3/home/index.page",
+            "page/gts3/home/changetime",
+            "page/gts3/home/sos"
+          ],
+          "window": {
+            "navigationBarBackgroundColor": "#ffffff",
+            "navigationBarTextStyle": "black",
+            "navigationBarTitleText": "",
+            "backgroundColor": "#eeeeee",
+            "backgroundTextStyle": "light"
+          }
+        },
+        "app-widget": {
+          "widgets": []
+        },
+        "watchface": {
+          "path": ""
+        },
+        "watch-widget": {
+          "widgets": []
+        }
+      },
+      "designWidth": 390,
+      "platforms": [
+        {
+          "name": "zurich",
+          "deviceSource": 7995648
+        },
+        {
+          "name": "zurichw",
+          "deviceSource": 7995649
+        }
+      ]
+    },
+    "gtr-4": {
+      "module": {
+        "page": {
+          "pages": [
+            "page/gtr4/home/index.page",
+            "page/gtr4/home/changetime",
+            "page/gtr4/home/sos"
+          ],
+          "window": {
+            "navigationBarBackgroundColor": "#ffffff",
+            "navigationBarTextStyle": "black",
+            "navigationBarTitleText": "",
+            "backgroundColor": "#eeeeee",
+            "backgroundTextStyle": "light"
+          }
+        },
+        "app-widget": {
+          "widgets": []
+        },
+        "watchface": {
+          "path": ""
+        },
+        "watch-widget": {
+          "widgets": []
+        }
+      },
+      "designWidth": 466,
+      "platforms": [
+        {
+          "name": "gtr-4",
+          "deviceSource": 7930112
+        },
+        {
+          "name": "gtr-4",
+          "deviceSource": 7930113
+        }
+      ]
     }
-  },
-  "designWidth": 454,
-  "platforms": [{
-      "name": "verona",
-      "deviceSource": 226
-    },
-    {
-      "name": "veronaw",
-      "deviceSource": 227
-    }
-  ]
-},
-"gts-3": {
-  "module": {
-    "page": {
-      "pages": [
-        "page/gts3/home/index.page",
-        "page/gts3/home/changetime",
-        "page/gts3/home/sos"
-      ],
-      "window": {
-        "navigationBarBackgroundColor": "#ffffff",
-        "navigationBarTextStyle": "black",
-        "navigationBarTitleText": "",
-        "backgroundColor": "#eeeeee",
-        "backgroundTextStyle": "light"
-      }
-    },
-    "app-widget": {
-      "widgets": []
-    },
-    "watchface": {
-      "path": ""
-    },
-    "watch-widget": {
-      "widgets": []
-    }
-  },
-  "designWidth": 390,
-  "platforms": [{
-      "name": "zurich",
-      "deviceSource": 224
-    },
-    {
-      "name": "zurichw",
-      "deviceSource": 225
-    }
-  ]
-},
-"t-rex2": {
-  "module": {
-    "page": {
-      "pages": [
-        "page/gtr-3/home/index.page",
-        "page/gtr-3/home/changetime",
-        "page/gtr-3/home/sos"
-      ],
-      "window": {
-        "navigationBarBackgroundColor": "#ffffff",
-        "navigationBarTextStyle": "black",
-        "navigationBarTitleText": "",
-        "backgroundColor": "#eeeeee",
-        "backgroundTextStyle": "light"
-      }
-    },
-    "app-widget": {
-      "widgets": []
-    },
-    "watchface": {
-      "path": ""
-    },
-    "watch-widget": {
-      "widgets": []
-    }
-  },
-  "designWidth": 454,
-  "platforms": [{
-      "name": "t-rex2",
-      "deviceSource": 418
-    },
-    {
-      "name": "t-rex2w",
-      "deviceSource": 419
-    }
-  ]
-},
-"gts-4": {
-  "module": {
-    "page": {
-      "pages": [
-        "page/gts3/home/index.page",
-        "page/gts3/home/changetime",
-        "page/gts3/home/sos"
-      ],
-      "window": {
-        "navigationBarBackgroundColor": "#ffffff",
-        "navigationBarTextStyle": "black",
-        "navigationBarTitleText": "",
-        "backgroundColor": "#eeeeee",
-        "backgroundTextStyle": "light"
-      }
-    },
-    "app-widget": {
-      "widgets": []
-    },
-    "watchface": {
-      "path": ""
-    },
-    "watch-widget": {
-      "widgets": []
-    }
-  },
-  "designWidth": 390,
-  "platforms": [{
-      "name": "zurich",
-      "deviceSource": 7995648
-    },
-    {
-      "name": "zurichw",
-      "deviceSource": 7995649
-    }
-  ]
-},
-"gtr-4": {
-  "module": {
-    "page": {
-      "pages": [
-        "page/gtr4/home/index.page",
-        "page/gtr4/home/changetime",
-        "page/gtr4/home/sos"
-      ],
-      "window": {
-        "navigationBarBackgroundColor": "#ffffff",
-        "navigationBarTextStyle": "black",
-        "navigationBarTitleText": "",
-        "backgroundColor": "#eeeeee",
-        "backgroundTextStyle": "light"
-      }
-    },
-    "app-widget": {
-      "widgets": []
-    },
-    "watchface": {
-      "path": ""
-    },
-    "watch-widget": {
-      "widgets": []
-    }
-  },
-  "designWidth": 466,
-  "platforms": [{
-      "name": "gtr-4",
-      "deviceSource": 7930112
-    },
-    {
-      "name": "gtr-4",
-      "deviceSource": 7930113
-    }
-  ]
-}
   },
   "configVersion": "v2",
   "permissions": [],

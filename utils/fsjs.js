@@ -1,1 +1,1 @@
-export const str_lenght=328
+export const str_lenght = 1146
