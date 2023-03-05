@@ -7,10 +7,10 @@ Page({
             hmApp.goBack()
         }
         function set() {
-            hmApp.gotoPage({ file: 'page/gtr-3/home/changetime' })
+            hmApp.gotoPage({ file: 'page/gtr3-pro/home/changetime' })
         }
         function about() {
-            hmApp.gotoPage({ file: 'page/gtr-3/home/about' })
+            hmApp.gotoPage({ file: 'page/gtr3-pro/home/about' })
         }
         function debug() {
             hmUI.showToast({ text: '仅对Pro版开放' })

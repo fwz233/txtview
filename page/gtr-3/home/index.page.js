@@ -5,16 +5,15 @@ const { messageBuilder } = getApp()._options.globalData
 var data, sos_screen, pageChange;
 var txtNum, scrollList;
 import { gettext } from 'i18n'
+
 Page({
   build() {
     logger.debug('page build invoked')
+    hmApp.setScreenKeep(false);
   },
   onInit() {
     logger.debug('page onInit invoked')
-    // this.onMessage()
-
     // Is_start=readFileSync('is_start')
-
     hmUI.setScrollView(true, 454, 1)
 
     const dataList = [
@@ -78,11 +77,20 @@ Page({
     if (sos_screen && pageChange == 'back') {
       hmApp.gotoPage({ file: 'page/gtr-3/home/sos' })
     }
-
+    var automode = readFileSync('autoMode_status'), automode_button
+    if (automode.length == 0)
+      automode_button = false
+    else
+      automode_button = automode
+    if (automode_button) {
+      hmSetting.setBrightScreenCancel()
+      hmUI.showToast({ text: '已恢复亮屏时间' })
+    }
   },
   onDestory() {
     writeFileSync('back', false, 'pageChange')
-  }, createAndUpdateList(sb) {
+  },
+  createAndUpdateList(sb) {
 
     var text
     if (sb == 0) {
@@ -104,7 +112,7 @@ Page({
       if (sb == 0)
         text[txt] = (txt + 1) + (((txt + 1) * 100) / txtNum).toFixed(2) + "%"
       if (sb == 1)
-        text.push((txt + 1) + '%')
+        text.push(txt + '%')
       text_type_config.push({
         start: txt + 1,
         end: txt + 1,
@@ -121,14 +129,14 @@ Page({
       data_count: text.length, // 数据长度
       on_page: 1 // 刷新数据后停留在当前页面，不设置或者设为0则回到list顶部
     })
-  }, scrollListItemClick(list, index) { // list, index
+  }, scrollListItemClick(list, index) {
     if (index != 0 && index != txtNum + 1) {
       writeFileSync(Math.round(str_lenght / 100 * (index - 1)), false, 'context')
       // writeFileSync('down', false,'pageChange')
       hmApp.gotoPage({ file: 'page/gtr-3/home/sos' })
     }
     else if (index == 0) {
-      hmApp.gotoPage({ file: 'page/gtr-3/home/changetime' })
+      hmApp.gotoPage({ file: 'page/gtr-3/home/menu' })
     }
     else if (index == txtNum + 1) {
       hmUI.showToast({

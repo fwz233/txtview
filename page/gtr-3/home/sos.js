@@ -13,8 +13,7 @@ Page({
     hmApp.setScreenKeep(true)
 
     context = readFileSync('context')
-    if (context.length == 0)
-      context = 0
+    if (context.length == 0) context = 0
 
     const fileName = 'raw/nb.txt';
     const [fs_stat, err] = hmFS.stat_asset(fileName);
@@ -50,7 +49,7 @@ Page({
     // persent = Math.floor(offsetCurrent * 100 / maxSize) + '%';
     const nowTime = hmSensor.createSensor(hmSensor.id.TIME)
     // Show the current time
-    data = (context + 1) + "-" + (((context + 1) * 100) / str_lenght).toFixed(2) + "%" + '-' + nowTime.hour + ':' + nowTime.minute +"\n" + data.replaceAll('\\n', '\n')
+    data = (context + 1) + "-" + (((context + 1) * 100) / str_lenght).toFixed(2) + "%" + '-' + nowTime.hour + ':' + nowTime.minute + "\n" + data.replaceAll('\\n', '\n')
 
     const one_start = hmUI.createWidget(hmUI.widget.BUTTON, {
       x: 0,
@@ -70,12 +69,10 @@ Page({
     hmUI.setScrollView(true, 321, page_number)
     height = Math.ceil(height / 321) * 321
     const text = hmUI.createWidget(hmUI.widget.TEXT)
-
-    if(readFileSync('lowMode_status')==[])
+    if (readFileSync('lowMode_status') == [])
       modColor = 0xeeeeee
-    else 
-      modColor = 0x999999
-
+    else
+      modColor = 0x888888
     text.setProperty(hmUI.prop.MORE, {
       x: 36,
       y: 96,
@@ -86,7 +83,8 @@ Page({
       text_size: 30,
       text_style: hmUI.text_style.WRAP,
     })
-    const one_setting = hmUI.createWidget(hmUI.widget.BUTTON, {
+
+    const one_end = hmUI.createWidget(hmUI.widget.BUTTON, {
       x: 0,
       y: 96 + height,
       w: 454,
@@ -99,18 +97,17 @@ Page({
     pageChange = readFileSync('pageChange')
     if (pageChange.length == 0) {
       writeFileSync('none', false, 'pageChange')
-      //  hmApp.reloadPage({ file: 'page/gts3/home/sos' })
     }
     if (pageChange != 'none') {
       writeFileSync('none', false, 'pageChange')
-      //  hmApp.reloadPage({ file: 'page/gts3/home/sos' })
     }
     hmApp.registerGestureEvent(function (event) {
       page_now.push(hmUI.getScrollCurrentPage())
       if (event == hmApp.gesture.DOWN) {
         if (page_now[page_now.length - 1] == 1 && page_now[page_now.length - 2] == page_now[page_now.length - 1])
           up()
-      } else if (event == hmApp.gesture.UP) {
+      }
+      else if (event == hmApp.gesture.UP) {
         if (page_now[page_now.length - 1] == page_number && page_now[page_now.length - 2] == page_now[page_now.length - 1])
           down()
       }
@@ -118,24 +115,23 @@ Page({
     })
 
     function up(button) {
-      // writeFileSync('up', false,'pageChange')
-      if (context != 0)
+      if (context != 0) {
         context--;
-      writeFileSync(context, false, 'context')
-      // hmApp.goBack()
-      hmFS.close(file)
-      hmApp.reloadPage({ file: 'page/gtr-3/home/sos' })
+        writeFileSync(context, false, 'context')
+        hmFS.close(file)
+        hmApp.reloadPage({ file: 'page/gtr-3/home/sos' })
+      }
+      else hmUI.showToast({ text: '前面没有了喵~' })
     }
     function down(button) {
-      writeFileSync('down', false, 'pageChange')
-      if (context + 1 != str_lenght)
+      if (context + 1 != str_lenght) {
         context++;
-      writeFileSync(context, false, 'context')
-      // hmApp.goBack()
-      hmFS.close(file)
-      hmApp.reloadPage({ file: 'page/gtr-3/home/sos' })
+        writeFileSync(context, false, 'context')
+        hmFS.close(file)
+        hmApp.reloadPage({ file: 'page/gtr-3/home/sos' })
+      }
+      else hmUI.showToast({ text: '已经看完了喵~' })
     }
-
     hmApp.registerKeyEvent(function (key, action) {
       if (key == hmApp.key.HOME) {
         if (action == hmApp.action.RELEASE) {
@@ -146,11 +142,26 @@ Page({
         return true
       }
     })
+    automode = readFileSync('autoMode_status')
+    if (automode.length == 0)
+      automode_button = false
+    else
+      automode_button = automode
+    if (automode_button) {
+      let ta = 0
+      hmSetting.setBrightScreen(1800)
+      const timer1 = timer.createTimer(
+        3500,
+        3500,
+        function (option) {
+          ta += 1;
+          (ta < page_number) ? (hmApp.setLayerY(hmApp.getLayerY() - 321)) : down()
+        }
+      )
+    }
   },
   onDestory() {
-    // hmSetting.setBrightScreen(10)
     hmApp.unregisterKeyEvent();
-    hmApp.unregisterGestureEvent(); // 取消注册手势监听
-    hmApp.setScreenKeep(false);
+    hmApp.unregisterGestureEvent();
   }
 })

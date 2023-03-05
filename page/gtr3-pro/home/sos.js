@@ -70,12 +70,10 @@ Page({
     hmUI.setScrollView(true, 321, page_number)
     height = Math.ceil(height / 321) * 321
     const text = hmUI.createWidget(hmUI.widget.TEXT)
-
     if (readFileSync('lowMode_status') == [])
       modColor = 0xeeeeee
     else
-      modColor = 0x999999
-
+      modColor = 0x888888
     text.setProperty(hmUI.prop.MORE, {
       x: 36,
       y: 96,
@@ -120,22 +118,22 @@ Page({
     })
 
     function up(button) {
-      //  writeFileSync('up', false,'pageChange')
-      if (context != 0)
+      if (context != 0) {
         context--;
-      writeFileSync(context, false, 'context')
-      // hmApp.goBack()
-      hmFS.close(file)
-      hmApp.reloadPage({ file: 'page/gtr3-pro/home/sos' })
+        writeFileSync(context, false, 'context')
+        hmFS.close(file)
+        hmApp.reloadPage({ file: 'page/gtr3-pro/home/sos' })
+      }
+      else hmUI.showToast({ text: '前面没有了喵~' })
     }
     function down(button) {
-      // writeFileSync('down', false,'pageChange')
-      if (context + 1 != str_lenght)
+      if (context + 1 != str_lenght) {
         context++;
-      writeFileSync(context, false, 'context')
-      // hmApp.goBack()
-      hmFS.close(file)
-      hmApp.reloadPage({ file: 'page/gtr3-pro/home/sos' })
+        writeFileSync(context, false, 'context')
+        hmFS.close(file)
+        hmApp.reloadPage({ file: 'page/gtr3-pro/home/sos' })
+      }
+      else hmUI.showToast({ text: '已经看完了喵~' })
     }
     hmApp.registerKeyEvent(function (key, action) {
       if (key == hmApp.key.HOME) {
@@ -147,11 +145,28 @@ Page({
         return true
       }
     })
+    automode = readFileSync('autoMode_status')
+    if (automode.length == 0)
+      automode_button = false
+    else
+      automode_button = automode
+    if (automode_button) {
+      let ta = 0
+      hmSetting.setBrightScreen(1800)
+      const timer1 = timer.createTimer(
+        1000,
+        2500,
+        function (option) {
+          ta += 1;
+          (ta < 5) ? (hmApp.setLayerY(hmApp.getLayerY() - 321)) : down()
+        }
+      )
+    }
   },
   onDestory() {
-    // hmSetting.setBrightScreen(10)
+    hmSetting.setBrightScreenCancel()
+    if (automode_button) hmUI.showToast({ text: '已恢复亮屏时间' })
     hmApp.unregisterKeyEvent();
-    hmApp.unregisterGestureEvent();// 取消注册手势监听
-    hmApp.setScreenKeep(false);
+    hmApp.unregisterGestureEvent();
   }
 })

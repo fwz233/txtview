@@ -5,18 +5,15 @@ const { messageBuilder } = getApp()._options.globalData
 var data, sos_screen, pageChange;
 var txtNum, scrollList;
 import { gettext } from 'i18n'
-//var Is_start=false
+
 Page({
   build() {
     logger.debug('page build invoked')
+    hmApp.setScreenKeep(false);
   },
   onInit() {
     logger.debug('page onInit invoked')
-    // this.onMessage()
-    // this.getTodoList()
-
     // Is_start=readFileSync('is_start')
-
     hmUI.setScrollView(true, 480, 1)
 
     const dataList = [
@@ -84,7 +81,8 @@ Page({
   },
   onDestory() {
     writeFileSync('back', false, 'pageChange')
-  }, createAndUpdateList(sb) {
+  },
+  createAndUpdateList(sb) {
 
     var text
     if (sb == 0) {
@@ -95,7 +93,6 @@ Page({
       text = []
       txtNum = 100;
     }
-
     var text_type_config = [
       {
         start: 0,
@@ -104,11 +101,10 @@ Page({
       }
     ]
     for (var txt = 0; txt < txtNum; txt++) {
-      // text[txt]=text[txt].substring(0,9)
       if (sb == 0)
         text[txt] = (txt + 1) + (((txt + 1) * 100) / txtNum).toFixed(2) + "%"
       if (sb == 1)
-        text.push((txt + 1) + '%')
+        text.push(txt + '%')
       text_type_config.push({
         start: txt + 1,
         end: txt + 1,
@@ -135,7 +131,7 @@ Page({
       hmApp.gotoPage({ file: 'page/gtr3-pro/home/sos' })
     }
     else if (index == 0) {
-      hmApp.gotoPage({ file: 'page/gtr3-pro/home/changetime' })
+      hmApp.gotoPage({ file: 'page/gtr3-pro/home/menu' })
     }
     else if (index == txtNum + 1) {
       hmUI.showToast({
