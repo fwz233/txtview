@@ -1,5 +1,4 @@
 import * as fs from './../shared/fs'
-// import { TODO_FILE_NAME } from './constants'
 
 export function readFileSync(name) {
   const resData = fs.readFileSync(name)

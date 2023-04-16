@@ -1,21 +1,20 @@
+const device = hmSetting.getDeviceInfo()
+function xw(num) { return Math.ceil(num / 454 * device.width) }
+function yh(num) { return Math.ceil(num / 454 * device.height) }
 import { readFileSync, writeFileSync } from '../../../utils/fs'
 const logger = DeviceRuntimeCore.HmLogger.getLogger('helloworld')
 import { gettext } from 'i18n'
-import { str_lenght } from './../../../utils/fsjs'
-var data, context, pageChange, page_number, page_now = [1];
-
+var data, context, book, modColor, pageChange, page_number, page_now = [1], ta = 0, pageCount = 345;
 Page({
-  build() {
-    logger.debug('page build invoked')
-  },
+  build() { },
   onInit() {
-    logger.debug('page onInit invoked')
     hmApp.setScreenKeep(true)
 
     context = readFileSync('context')
     if (context.length == 0) context = 0
-
-    const fileName = 'raw/nb.txt';
+    book = readFileSync('book')
+    if (book.length == 0) book = '1'
+    const fileName = 'raw/nb' + book + '.txt';
     const [fs_stat, err] = hmFS.stat_asset(fileName);
     var maxSize;
     if (err == 0) {
@@ -27,8 +26,8 @@ Page({
     else {
       console.log('err:', err)
     }
-    var pageCount = 345
-    const file = hmFS.open_asset('raw/nb.txt', hmFS.O_RDONLY);
+    var persent = Math.ceil(maxSize / (690));
+    const file = hmFS.open_asset(fileName, hmFS.O_RDONLY);
     const test_buf = new Uint16Array(pageCount);
     const test_buf2 = new Uint16Array(test_buf.length);
     var offsetCurrent = context * pageCount * 2;
@@ -46,54 +45,82 @@ Page({
       }
     }
     data = String.fromCharCode.apply(null, test_buf2);
-    // persent = Math.floor(offsetCurrent * 100 / maxSize) + '%';
     const nowTime = hmSensor.createSensor(hmSensor.id.TIME)
-    // Show the current time
-    data = (context + 1) + "-" + (((context + 1) * 100) / str_lenght).toFixed(2) + "%" + '-' + nowTime.hour + ':' + nowTime.minute + "\n" + data.replaceAll('\\n', '\n')
-
-    const one_start = hmUI.createWidget(hmUI.widget.BUTTON, {
-      x: 0,
-      y: 49 - 166,
-      w: 454,
-      h: 166,
-      press_src: 'clickdown.png',
-      normal_src: 'start.png',
-      click_func: up
-    })
-
+    data = data.replace(/\s+/g, "\n\n    ")
+    if (readFileSync('lowMode_status') == [])
+      modColor = 0xeeeeee
+    else
+      modColor = 0x888888
     var { width, height } = hmUI.getTextLayout(data, {
       text_size: 30,
-      text_width: 382
+      text_width: xw(382)
     })
     page_number = Math.ceil(height / 321)
     hmUI.setScrollView(true, 321, page_number)
     height = Math.ceil(height / 321) * 321
     const text = hmUI.createWidget(hmUI.widget.TEXT)
-    if (readFileSync('lowMode_status') == [])
-      modColor = 0xeeeeee
-    else
-      modColor = 0x888888
     text.setProperty(hmUI.prop.MORE, {
-      x: 36,
-      y: 96,
-      w: 382,
+      x: xw(39),
+      y: yh(96),
+      w: xw(378),
       h: height,
       text: data,
       color: modColor,
       text_size: 30,
       text_style: hmUI.text_style.WRAP,
     })
-
+    const one_start = hmUI.createWidget(hmUI.widget.BUTTON, {
+      x: xw(0),
+      y: yh(42),
+      w: xw(38),
+      h: yh(370),
+      normal_color: 0x000000,
+      press_color: 0x111111,
+      text: '<',
+      color: modColor,
+      radius: 46,
+      click_func: up
+    })
+    const one_menu = hmUI.createWidget(hmUI.widget.BUTTON, {
+      x: xw(0),
+      y: yh(42),
+      w: xw(454),
+      h: yh(46),
+      normal_color: 0x000000,
+      press_color: 0x111111,
+      text: (context + 1) + "-" + (((context + 1) * 100) / persent).toFixed(2) + "%" + '-' + nowTime.hour + ':' + nowTime.minute,
+      text_size: 25,
+      color: modColor,
+      radius: 24,
+      click_func: menu
+    })
     const one_end = hmUI.createWidget(hmUI.widget.BUTTON, {
-      x: 0,
-      y: 96 + height,
-      w: 454,
-      h: 166,
-      press_src: 'clickdown.png',
-      normal_src: 'stop.png',
+      x: xw(454 - 38),
+      y: yh(42),
+      w: xw(38),
+      h: yh(370),
+      normal_color: 0x000000,
+      press_color: 0x111111,
+      text: '>',
+      color: modColor,
+      radius: 46,
+      click_func: scroll
+    })
+    const one_next = hmUI.createWidget(hmUI.widget.BUTTON, {
+      x: xw(0),
+      y: yh(height + 84),
+      w: xw(454),
+      h: yh(60),
+      normal_color: 0x000000,
+      press_color: 0x111111,
+      text: 'v',
+      text_size: 34,
+      color: modColor,
+      radius: 46,
       click_func: down
     })
-
+    if (device.width < 300) hmUI.deleteWidget(one_start)
+    if (device.width < 300) hmUI.deleteWidget(one_end) // band
     pageChange = readFileSync('pageChange')
     if (pageChange.length == 0) {
       writeFileSync('none', false, 'pageChange')
@@ -124,13 +151,33 @@ Page({
       else hmUI.showToast({ text: '前面没有了喵~' })
     }
     function down(button) {
-      if (context + 1 != str_lenght) {
+      if (context + 1 != persent) {
         context++;
         writeFileSync(context, false, 'context')
         hmFS.close(file)
         hmApp.reloadPage({ file: 'page/gtr-3/home/sos' })
       }
       else hmUI.showToast({ text: '已经看完了喵~' })
+    }
+    function menu(button) {
+      hmFS.close(file)
+      hmApp.gotoPage({ file: 'page/gtr-3/home/menu' })
+    }
+    function scroll() {
+      ta++;
+      if (device.width > 300) one_start.setProperty(hmUI.prop.MORE, {
+        x: xw(0),
+        y: yh(42 + ta * 321),
+        w: xw(38),
+        h: yh(370)
+      });
+      if (device.width > 300) one_end.setProperty(hmUI.prop.MORE, {
+        x: xw(454 - 38),
+        y: yh(42 + ta * 321),
+        w: xw(38),
+        h: yh(370)
+      });
+      (hmApp.getLayerY() - 321 > 0 - height) ? (hmApp.setLayerY(hmApp.getLayerY() - 321)) : down()
     }
     hmApp.registerKeyEvent(function (key, action) {
       if (key == hmApp.key.HOME) {
@@ -148,14 +195,12 @@ Page({
     else
       automode_button = automode
     if (automode_button) {
-      let ta = 0
       hmSetting.setBrightScreen(1800)
       const timer1 = timer.createTimer(
-        3500,
-        3500,
+        4000,
+        4000,
         function (option) {
-          ta += 1;
-          (ta < page_number) ? (hmApp.setLayerY(hmApp.getLayerY() - 321)) : down()
+          scroll()
         }
       )
     }

@@ -9,7 +9,6 @@ Page({
     logger.debug('page build invoked')
   },
   onInit() {
-    logger.debug('page onInit invoked')
     hmApp.setScreenKeep(true)
 
     context = readFileSync('context')
@@ -20,7 +19,7 @@ Page({
     const [fs_stat, err] = hmFS.stat_asset(fileName);
     var maxSize;
     if (err == 0) {
-      console.log('--->size:', fs_stat.size);
+      console.log('-->size:', fs_stat.size);
       if (fs_stat.size != 0) {
         maxSize = fs_stat.size;
       }
@@ -75,7 +74,7 @@ Page({
     else
       modColor = 0x888888
     text.setProperty(hmUI.prop.MORE, {
-      x: 36,
+      x: 40,
       y: 96,
       w: 480 - 72,
       h: height,
@@ -154,18 +153,16 @@ Page({
       let ta = 0
       hmSetting.setBrightScreen(1800)
       const timer1 = timer.createTimer(
-        1000,
-        2500,
+        3500,
+        3500,
         function (option) {
           ta += 1;
-          (ta < 5) ? (hmApp.setLayerY(hmApp.getLayerY() - 321)) : down()
+          (ta < page_number) ? (hmApp.setLayerY(hmApp.getLayerY() - 321)) : down()
         }
       )
     }
   },
   onDestory() {
-    hmSetting.setBrightScreenCancel()
-    if (automode_button) hmUI.showToast({ text: '已恢复亮屏时间' })
     hmApp.unregisterKeyEvent();
     hmApp.unregisterGestureEvent();
   }

@@ -13,7 +13,7 @@ Page({
             hmApp.gotoPage({ file: 'page/gtr3-pro/home/about' })
         }
         function debug() {
-            hmUI.showToast({ text: '仅对Pro版开放' })
+            hmApp.gotoPage({ file: 'page/gtr3-pro/home/debug' })
         }
         const backButton = hmUI.createWidget(hmUI.widget.BUTTON, {
             x: 0,

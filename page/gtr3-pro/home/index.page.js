@@ -2,17 +2,14 @@ const logger = DeviceRuntimeCore.HmLogger.getLogger('helloworld')
 import { readFileSync, writeFileSync } from './../../../utils/fs'
 import { str_lenght } from './../../../utils/fsjs'
 const { messageBuilder } = getApp()._options.globalData
-var data, sos_screen, pageChange;
-var txtNum, scrollList;
+var sos_screen, pageChange, txtNum, scrollList;
 import { gettext } from 'i18n'
 
 Page({
   build() {
-    logger.debug('page build invoked')
     hmApp.setScreenKeep(false);
   },
   onInit() {
-    logger.debug('page onInit invoked')
     // Is_start=readFileSync('is_start')
     hmUI.setScrollView(true, 480, 1)
 
@@ -20,7 +17,25 @@ Page({
       '1',
       '2',
       '3'
-    ]
+    ];
+    function back() {
+      if (sos_screen.length == 0)
+        sos_screen = false
+      if (sos_screen) {
+        hmApp.gotoPage({ file: 'page/gtr3-pro/home/sos' })
+      }
+    }
+    hmUI.createWidget(hmUI.widget.BUTTON, {
+      x: 480 - 34,
+      y: 236,
+      w: 32,
+      h: 32,
+      radius: 45,
+      normal_color: 0xc08eaf,
+      press_color: 0xfeb4a8,
+      text: '返',
+      click_func: back
+    })
     scrollList = hmUI.createWidget(hmUI.widget.SCROLL_LIST, {
       x: 72,
       y: 36,
@@ -77,7 +92,15 @@ Page({
     if (sos_screen && pageChange == 'back') {
       hmApp.gotoPage({ file: 'page/gtr3-pro/home/sos' })
     }
-
+    var automode = readFileSync('autoMode_status'), automode_button
+    if (automode.length == 0)
+      automode_button = false
+    else
+      automode_button = automode
+    if (automode_button) {
+      hmSetting.setBrightScreenCancel()
+      hmUI.showToast({ text: '已恢复亮屏时间' })
+    }
   },
   onDestory() {
     writeFileSync('back', false, 'pageChange')
@@ -118,20 +141,27 @@ Page({
       data_type_config: text_type_config,
       data_type_config_count: text_type_config.length,
       data_array: text,
-      //数据长度
       data_count: text.length,
-      //刷新数据后停留在当前页面，不设置或者设为0则回到list顶部
-      on_page: 1
+      on_page: 1 //刷新数据后停留在当前页面，不设置或者设为0则回到list顶部
     })
-
   }, scrollListItemClick(list, index) {
     if (index != 0 && index != txtNum + 1) {
-      writeFileSync(Math.round(str_lenght / 100 * (index - 1)), false, 'context')
       // writeFileSync('down', false,'pageChange')
-      hmApp.gotoPage({ file: 'page/gtr3-pro/home/sos' })
+      const protectDialog = hmUI.createDialog({
+        title: gettext('protect') + (index - 1) + '%?',
+        show: true,
+        auto_hide: false,
+        click_linster: ({ type }) => {
+          if (type) {
+            writeFileSync(Math.round(str_lenght / 100 * (index - 1)), false, 'context')
+            hmApp.gotoPage({ file: 'page/gtr3-pro/home/sos' })
+          }
+          protectDialog.show(false)
+        }
+      })
     }
     else if (index == 0) {
-      hmApp.gotoPage({ file: 'page/gtr3-pro/home/menu' })
+      hmApp.gotoPage({ file: 'page/home/menu' })
     }
     else if (index == txtNum + 1) {
       hmUI.showToast({
